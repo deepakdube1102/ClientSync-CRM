@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="container-fluid" style="padding: 0; margin: 0;">
+    {% if not user.is_authenticated %}
+    <div class="row justify-content-center">
+        <img src="{% static 'images/ClientSync.png' %}" alt="ClientSync Logo" class="img-fluid" style="max-width: 400px; margin-top: -50px;">
+    </div>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+
+    <h1 style="text-align: center;">Customer Records</h1>
+
+    <div class="row">
+      <div class="col-md-12" style="margin-left: 0; padding-left: 0;">
+        <table class="table table-striped table-hover table-bordered" style="width: 100%; margin: 0 auto; table-layout: auto; background-color: rgba(255, 255, 255, 0.2); border-collapse: collapse; height: 40px; overflow-y: auto;">
+          <thead class="table-dark">
+            <tr>
+              <th style="text-align: center; padding: 10px;">ID</th>
+              <th style="text-align: center; padding: 10px;">Name</th>
+              <th style="text-align: center; padding: 10px;">Email</th>
+              <th style="text-align: center; padding: 10px;">Phone Number</th>
+              <th style="text-align: center; padding: 10px;">Zipcode</th>
+              <th style="text-align: center; padding: 10px;">Created At</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+        {% if records %}
+            {% for record in records %}
+              <tr>
+                <td style="text-align: center; padding: 10px;"><a href="{% url 'record' record.id %}" style="color: #000; font-size: 14px;">{{ record.id }}</a></td>
+                <td style="text-align: center; padding: 10px;"><b><a href="{% url 'record' record.id %}" style="color: #000; font-size: 14px;">{{ record.first_name }} {{ record.last_name }}</a></b></td>
+                <td style="text-align: center; padding: 10px;">{{ record.email }}</td>
+                <td style="text-align: center; padding: 10px;">{{ record.phone }}</td>
+                <td style="text-align: center; padding: 10px;">{{ record.zipcode }}</td>
+                <td style="text-align: center; padding: 10px;">{{ record.created_at }}</td>
+              </tr>
+            {% endfor %}
+
+        {% endif %}
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div style="height: 20px;"></div>
+
+    <div class="d-flex justify-content-end" style="position: relative; z-index: 1;">
+        <button type="button" onclick="window.location.href='{% url 'download_all_records' %}'" class="btn btn-success btn-lg" style="border-radius: 10px;">Download All Records</button>
+    </div>
+
+    {% else %}
+        <h1 style="margin-top: -80px;">Login</h1>
+        <br/>
+        <form method="POST" action="{% url 'main' %}" style="margin-top: -20px;">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <input type="text" class="form-control" name="username" placeholder="username" required>
+            </div>
+            <div class="mb-3">
+                <input type="password" class="form-control" name="password" placeholder="password" required>
+            </div>
+
+            <button type="submit" class="btn btn-success btn-lg">Login</button>
+            <a href="{% url 'password_reset' %}" style="float: right; margin-top: 10px; font-weight: bold;">Forgot Password?</a>
+        </form>
+    {% endif %}
+</div>
+
+{% endblock %}

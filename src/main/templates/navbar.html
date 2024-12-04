@@ -1,0 +1,54 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'home' %}">
+      <img src="{% static 'images/ClientSync logo.png' %}" alt="ClientSync Logo" style="width: 60px; height: 40px; margin-right: 10px;">
+      <span style="font-size: 30px; font-weight: bold;">ClientSync</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+      
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="navbar-text text-white" href="{% url 'user_profile' %}" style="font-size: 20px; font-weight: bold; margin-right: 20px;">Welcome, {{ user.username }}!</a>
+        </li>
+        <li class="nav-item me-2">
+          <a class="btn btn-success rounded-3" href="{% url 'add_record' %}">Add Record</a>
+        </li>
+
+        <li class="nav-item me-2">
+          <a class="btn btn-info rounded-3" href="{% url 'about' %}">About</a>
+        </li>
+
+        <li class="nav-item me-2">
+          <a class="btn btn-warning rounded-3" href="{% url 'contact' %}">Contact</a>
+        </li>
+
+        <li class="nav-item me-2">
+          <a class="btn btn-danger rounded-3" href="{% url 'logout' %}">Logout</a>
+        </li>
+
+        {% else %}
+        <li class="nav-item me-2">
+          <a class="btn btn-success rounded-3" href="{% url 'register' %}">Register</a>
+        </li>
+        <li class="nav-item me-2">
+          <a class="btn btn-primary rounded-3" href="{% url 'main' %}">Login</a>
+        </li>
+        {% endif %}
+
+        {% if request.path == '/login/' or request.path == '/register/' %}
+          <li class="nav-item me-2">
+            <button class="btn btn-danger" style="background-color: #dc3545; border-color: #dc3545;" onclick="location.href='{% url 'customer_login' %}'">Customer Portal</button>
+          </li>
+        {% endif %}
+      
+      </ul>
+
+    </div>
+  </div>
+</nav>

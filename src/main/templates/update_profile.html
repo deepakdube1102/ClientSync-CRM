@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1 style="text-align: center; font-size: 40px; font-weight: bold;">Update Profile</h1>
+  <div style="width: 60%; margin: 0 auto; padding: 40px; border: 1px solid #333; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); background-color: rgba(68, 68, 68, 0.5);">
+    <!-- Profile Picture Display -->
+    <div style="text-align: center; margin-bottom: 20px;">
+      {% if user.profile.profile_picture %}
+        <p>Profile picture URL: {{ user.profile.profile_picture.url }}</p>
+        <img src="{{ user.profile.profile_picture.url }}" alt="Profile Picture" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover;">
+      {% else %}
+        <p style="color: #fff;">No profile picture uploaded (user: {{ user.username }})</p>
+      {% endif %}
+    </div>
+
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ user_form.as_p }}
+      {{ profile_form.as_p }}
+      <button type="submit" style="background-color: #007bff; color: #fff; padding: 10px 20px; border: none; border-radius: 50px; cursor: pointer;">Update Profile</button>
+    </form>
+  </div>
+  <!-- Add any other fields you want to display -->
+  <style>
+    .field-box {
+      height: 100px;
+    }
+    /* Additional styles for form elements */
+    form input, form select, form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+    form label {
+      color: #fff;
+      display: block;
+      margin-bottom: 5px;
+    }
+    /* Style for error messages */
+    .errorlist {
+      color: #ff6b6b;
+      list-style-type: none;
+      padding: 0;
+    }
+  </style>
+{% endblock %}

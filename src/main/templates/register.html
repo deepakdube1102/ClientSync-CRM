@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1><center>Register</center></h1>
+    <div class="register-form">
+        <form method="POST" action="">
+            {% csrf_token %}
+            {% if form.errors %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    Your Form Has Errors
+                    {% for field in form %}
+                        {% if field.errors %}
+                            {{ field.errors }}
+                        {% endif %}
+                    {% endfor %}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+
+            {{ form.as_p }}
+
+            <br/>
+            <button type="submit" class="btn btn-success btn-lg" style="padding: 5px 10px; border-radius: 5px;">Register</button>
+        </form>
+    </div>
+{% endblock %}

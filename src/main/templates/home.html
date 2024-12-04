@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+  body, h1, p, button {
+    font-family: 'Roboto Slab', serif;
+  }
+</style>
+
+    <div style="text-align: center;">
+        <h1 style="font-size: 2.5em; font-weight: bold; color: white; border: 2px solid black; padding: 10px;">Welcome to ClientSync!</h1>
+        <br/>
+        <h2 style="font-size: 2em; font-weight: bold; color: white; padding: 10px;">ClientSync – Making client management easy, efficient, and effective</h2>
+        <br/>
+        <h3 style="font-size: 1.8em; font-weight: bold; color: white; border: 2px solid black; padding: 10px;">Effortless Client Data Management</h3>
+        <p style="font-size: 1.3em; font-weight: bold; color: white; padding: 10px;">At Client Sync, we are committed to simplifying how you manage and maintain your customer data records. Our platform is designed to help you organize and store essential client information efficiently, ensuring that your records are always up-to-date and easily accessible.</p>
+        
+        <a href="{% url 'main' %}"style="font-size: 1.3em; font-weight: bold" class="btn btn-primary">View Customer Records</a>
+    </div>
+{% endblock %}

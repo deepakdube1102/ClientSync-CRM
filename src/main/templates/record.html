@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container-fluid" style="background-color: rgba(0, 0, 0, 0); padding: 20px;">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm" style="background-color: #fff; padding: 20px; border-radius: 10px;">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title">Customer Record #{{ customer_record.id }}</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        <strong>Name: </strong>{{ customer_record.first_name }} {{ customer_record.last_name }}
+                    </p>
+                    <p class="card-text">
+                        <strong>Email: </strong>{{ customer_record.email }}
+                    </p>
+                    <p class="card-text">
+                        <strong>Phone: </strong>{{ customer_record.phone }}
+                    </p>
+                    <p class="card-text">
+                        <strong>Address: </strong>{{ customer_record.address }}
+                    </p>
+                    <p class="card-text">
+                        <strong>City: </strong>{{ customer_record.city }}
+                    </p>
+                    <p class="card-text">
+                        <strong>State: </strong>{{ customer_record.state }}
+                    </p>
+                    <p class="card-text">
+                        <strong>Zipcode: </strong>{{ customer_record.zipcode }}
+                    </p>
+                    <p class="card-text">
+                        <strong>Create At: </strong>{{ customer_record.created_at }}
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex">
+                        <a href="{% url 'main' %}" class="btn btn-secondary me-2">Back</a>
+                        <a href="{% url 'update_record' customer_record.id %}" class="btn btn-success rounded-3 me-2">Update Record</a>
+                        <a href="{% url 'delete_record' customer_record.id %}" class="btn btn-danger me-2">Delete</a>
+                        <button type="button" class="btn btn-primary" onclick="downloadRecord()">Download Record</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function downloadRecord() {
+    var record = {
+        "ID": "{{ customer_record.id }}",
+        "First Name": "{{ customer_record.first_name }}",
+        "Last Name": "{{ customer_record.last_name }}",
+        "Email": "{{ customer_record.email }}",
+        "Phone": "{{ customer_record.phone }}",
+        "Address": "{{ customer_record.address }}",
+        "City": "{{ customer_record.city }}",
+        "State": "{{ customer_record.state }}",
+        "Zipcode": "{{ customer_record.zipcode }}",
+        "Created At": "{{ customer_record.created_at }}"
+    };
+
+    var csv = Object.keys(record).join(",") + "\n" + Object.values(record).join(",");
+
+    var csvFile = new Blob([csv], {type: "text/csv"});
+    var downloadLink = document.createElement("a");
+    downloadLink.download = "customer_record.csv";
+    downloadLink.href = window.URL.createObjectURL(csvFile);
+    downloadLink.click();
+}
+</script>
+
+{% endblock %}
